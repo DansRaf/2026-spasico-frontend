@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import { BookingTable } from './components/BookingTable';
+import { BookingTable } from './components/BookingTable'; // Memperbaiki baris 2
 import { bookingService } from './services/bookingService';
-import type { Booking } from './types/booking'; //
+import type { Booking } from './types/booking';
 
 function App() {
+  // Memperbaiki baris 9 & 10
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Fungsi untuk mengambil data dari Backend
   const loadData = async () => {
     try {
       const data = await bookingService.getAll();
@@ -23,36 +23,33 @@ function App() {
     loadData();
   }, []);
 
+  // Memperbaiki baris 29
   const handleUpdateStatus = async (id: number, status: string) => {
     if (confirm(`Ubah status menjadi ${status}?`)) {
       await bookingService.updateStatus(id, status);
-      loadData(); // Refresh data setelah update
+      loadData(); 
     }
   };
 
+  // Memperbaiki baris 36
   const handleDelete = async (id: number) => {
-    if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
+    if (confirm("Hapus data peminjaman ini?")) {
       await bookingService.delete(id);
-      loadData(); // Refresh data setelah soft delete
+      loadData();
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-6xl mx-auto">
-        <header className="mb-8 flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Spasico Dashboard</h1>
-            <p className="text-gray-600">Manajemen Peminjaman Ruangan</p>
-          </div>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-            + Tambah Peminjaman
-          </button>
-        </header>
+        <h1 className="text-3xl font-bold mb-8">Spasico Dashboard</h1>
 
+        {/* MENGGUNAKAN 'loading' (Memperbaiki warning baris 10) */}
         {loading ? (
-          <p className="text-center py-10">Memuat data dari server...</p>
+          <div className="text-center py-10">Memuat data dari database...</div>
         ) : (
+          /* MENGGUNAKAN 'BookingTable', 'bookings', 'handleUpdateStatus', & 'handleDelete' 
+             (Memperbaiki warning baris 2, 9, 29, dan 36) */
           <BookingTable 
             bookings={bookings} 
             onUpdateStatus={handleUpdateStatus} 
